@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import TodoList from '../../components/todolist'
 import CriarTodo from '../../components/criarTodo'
 import { TodoProps } from '../../@types/todo'
-import { useTodo } from '../../hook/useTodo'
 
 enum TodoPages {
   'criarTodo' = 'criarTodo',
@@ -10,11 +9,9 @@ enum TodoPages {
 }
 
 const Todo = () => {
-    const todoService = useTodo()
-    const [getTodos, setTodos] = useState<TodoProps[]>(todoService.get())
+    const [getTodos, setTodos] = useState<TodoProps[]>([])
     
     const [getPaginaAtual, setPaginaAtual] = useState<TodoPages>(TodoPages.listarTodo);
-
 
     const renderizarPagina = () => {
       switch (getPaginaAtual) {
@@ -25,7 +22,6 @@ const Todo = () => {
               novoTodo.id = id
               const tmpTodos: TodoProps[] = [...getTodos, novoTodo]
               setTodos(tmpTodos)
-              todoService.set(tmpTodos)
               // setPaginaAtual(TodoPages.listarTodo)
             }} />
           )
